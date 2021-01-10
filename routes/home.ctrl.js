@@ -1,12 +1,25 @@
 "use strict";
-const home = (req, res) => res.render("./home.ejs");
 
-const login = (req, res) => res.render("./login.ejs");
+const db = require("../config/dbConfig");
 
-const signUp = (req, res) => res.render("./signUp.ejs");
+const output = {
+	home : (req, res) => res.render("./home.ejs"),
+	login : (req, res) => res.render("./login.ejs"),
+	signup : (req, res) => res.render("./signUp.ejs"),
+}
 
+const process = {
+	signup : (req, res) => {
+		const data = req.body;
+		console.log(data);
+		let sql = "INSERT INTO user (id, password, name) VALUES (?, ?, ?)";
+		const params = [id, password, userName];
+		db.query(sql, params, (err, rows, fields) => {
+		if (err) console.log(err);
+		});
+	}
+}
 module.exports = {
-  home,
-  login,
-  signUp,
+	output,
+	process
 };
