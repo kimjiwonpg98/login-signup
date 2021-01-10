@@ -10,4 +10,4 @@ const dbConfig = mysql.createConnection({
 
 dbConfig.connect();
 
-module.exports = { dbConfig };
+module.exports = dbConfig;
