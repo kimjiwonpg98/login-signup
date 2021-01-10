@@ -8,19 +8,19 @@ function run() {
 }
 
 function requestSignup() {
-	const data = {
-		id : id.value, 
-		password : password.value, 
-		userName : userName.value
-	}
-	
-	fetch("/signup", {
-		method : 'POST',
-		headers : {
-			'Content-Type' : 'application/json'
-		},
-		body : JSON.stringify(data)
-	})
+  const data = {
+    id: id.value,
+    password: password.value,
+    userName: userName.value,
+  };
+
+  fetch("/signup", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
 }
 
 run();
