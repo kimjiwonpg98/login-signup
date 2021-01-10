@@ -11,12 +11,11 @@ const output = {
 const process = {
 	signup : (req, res) => {
 		const data = req.body;
-		console.log(data);
 		let sql = "INSERT INTO user (id, password, name) VALUES (?, ?, ?)";
-		const params = [id, password, userName];
-		db.query(sql, params, (err, rows, fields) => {
-		if (err) console.log(err);
-		});
+		// const params = [id, password, userName];
+		// db.query(sql, params, (err, rows, fields) => {
+			// if (err) console.log(err);
+		// });
 	}
 }
 module.exports = {

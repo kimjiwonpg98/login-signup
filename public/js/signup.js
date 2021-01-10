@@ -4,8 +4,7 @@ const id = document.querySelector(".inputID"),
   completeBtn = document.querySelector(".complete");
 
 function run() {
-  completeBtn.addEventListener("click", () => requestSignup);
-  console.log("hi");
+  completeBtn.addEventListener("click", requestSignup);
 }
 
 function requestSignup() {
