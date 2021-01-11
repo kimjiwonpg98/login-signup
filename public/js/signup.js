@@ -1,10 +1,14 @@
 const id = document.querySelector(".inputID"),
   password = document.querySelector(".inputPW"),
   userName = document.querySelector(".userName"),
-  completeBtn = document.querySelector(".complete");
+  completeBtn = document.querySelector(".complete"),
+  backBtn = document.querySelector(".back");
 
 function run() {
   completeBtn.addEventListener("click", requestSignup);
+  backBtn.addEventListener("click", () => {
+    location.href = "/";
+  });
 }
 
 function requestSignup() {
@@ -16,11 +20,13 @@ function requestSignup() {
 
   fetch("/signup", {
     method: "POST",
+    body: JSON.stringify(data),
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
   });
+
+  location.href = "/";
 }
 
 run();

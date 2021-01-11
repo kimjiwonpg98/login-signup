@@ -1,2 +1,51 @@
+const id = document.querySelector(".ID"),
+  pw = document.querySelector(".PW"),
+  loginBtn = document.querySelector(".loginBtn"),
+  backBtn = document.querySelector(".backBtn");
 
+function run() {
+  loginBtn.addEventListener("click", login);
+  backBtn.addEventListener("click", () => {
+    location.href = "/";
+  });
+}
 
+const login = () => {
+  const data = {
+    id: id.value,
+    pw: pw.value,
+  };
+
+  const post = {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const requestLogin = (post) => {
+    fetch("/login", post)
+      .then((res) => res.json())
+      .then((res) => {
+        processResponse(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  requestLogin(post);
+
+  const processResponse = (res) => {
+    if (res.isSuccess) {
+      let name = res.name;
+      location.href = "/success";
+      alert(`${name}님 환영합니다🎉`);
+      return;
+    }
+    alert("login fail");
+  };
+};
+
+run();
