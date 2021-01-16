@@ -1,5 +1,5 @@
 const id = document.querySelector(".ID"),
-  pw = document.querySelector(".PW"),
+  password = document.querySelector(".PW"),
   loginBtn = document.querySelector(".loginBtn"),
   backBtn = document.querySelector(".backBtn");
 
@@ -13,7 +13,7 @@ function run() {
 const login = () => {
   const data = {
     id: id.value,
-    pw: pw.value,
+    pw: password.value,
   };
 
   const post = {

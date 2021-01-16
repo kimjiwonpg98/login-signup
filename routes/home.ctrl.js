@@ -1,6 +1,7 @@
 "use strict";
 
 const db = require("../config/dbConfig");
+const bcrypt = require("bcrypt-nodejs");
 
 const output = {
   home: (req, res) => res.render("./home.ejs"),
@@ -12,11 +13,18 @@ const output = {
 const process = {
   signup: (req, res) => {
     const data = req.body;
-
-    let sql = "INSERT INTO user (id, password, name) VALUES (?, ?, ?)";
-    const params = [data.id, data.password, data.userName];
-    db.query(sql, params, (err, rows, fields) => {
-      if (err) console.log(err);
+    bcrypt.genSalt(10, (err, salt) => {
+      if (err) {
+        console.log("bcrypt.genSalt() error :", err.message);
+      } else {
+        bcrypt.hash(data.password, salt, null, (err, hash) => {
+          let sql = "INSERT INTO user (id, password, name) VALUES (?, ?, ?)";
+          const params = [data.id, hash, data.userName];
+          db.query(sql, params, (err) => {
+            if (err) console.log(err);
+          });
+        });
+      }
     });
   },
 
@@ -29,7 +37,7 @@ const process = {
       const db = rows[0];
       if (err) throw err;
 
-      if (db && user.id === db.id && user.pw === db.password) {
+      if (db && user.id === db.id && bcrypt.compareSync(user.pw, db.password)) {
         response.isSuccess = true;
         response.name = db.name;
         console.log(response);
