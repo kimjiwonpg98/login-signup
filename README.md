@@ -23,7 +23,8 @@
 #### db와 일치하면 이름과 함께 alert가 뜨면서 welcome 화면으로 들어간다.
 ![ex_screenshot](./image/loginsuccess.PNG)
 ![ex_screenshot](./image/success.PNG)
-#### 틀리면 다시 적으라는 alert가 뜬다.
+#### 틀리면 실패라는 alert가 뜬다.
+![ex_screenshot](./image/fail.PNG)
 
 
 
