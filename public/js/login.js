@@ -40,11 +40,10 @@ const login = () => {
   const processResponse = (res) => {
     if (res.isSuccess) {
       let name = res.name;
-      location.href = "/success";
       alert(`${name}님 환영합니다🎉`);
       return;
     }
-    alert("login fail");
+    alert("login 실패");
   };
 };
 

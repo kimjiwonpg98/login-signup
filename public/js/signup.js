@@ -12,6 +12,10 @@ function run() {
 }
 
 function requestSignup() {
+  if (passwordCheck(password)) {
+    alert("비밀번호는 대소문자와 숫자를 포함한 8~16자리 비밀번호로 해주세요");
+    return (password.value = "");
+  }
   const data = {
     id: id.value,
     password: password.value,
@@ -27,6 +31,16 @@ function requestSignup() {
   });
 
   location.href = "/";
+}
+
+function passwordCheck(password) {
+  const check = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,16}$/;
+  if (!check.test(password.value)) {
+    return true;
+  } else {
+    console.log("bye");
+    return false;
+  }
 }
 
 run();
