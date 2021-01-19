@@ -27,9 +27,7 @@ const login = () => {
   const requestLogin = (post) => {
     fetch("/login", post)
       .then((res) => res.json())
-      .then((res) => {
-        processResponse(res);
-      })
+      .then((res) => processResponse(res))
       .catch((err) => {
         console.log(err);
       });
@@ -41,7 +39,7 @@ const login = () => {
     if (res.isSuccess) {
       let name = res.name;
       alert(`${name}님 환영합니다🎉`);
-      return;
+      return (location.href = "/success");
     }
     alert("login 실패");
   };

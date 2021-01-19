@@ -38,7 +38,6 @@ function passwordCheck(password) {
   if (!check.test(password.value)) {
     return true;
   } else {
-    console.log("bye");
     return false;
   }
 }
