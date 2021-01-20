@@ -40,19 +40,28 @@ const process = {
       secretObject.secret
     );
     let sql = `SELECT * FROM user WHERE id LIKE ?`;
-    db.query(sql, [user.id], (err, rows) => {
-      const db = rows[0];
-      if (err) throw err;
+    let insert = `UPDATE USER  SET token = ? WHERE id = ?`;
+    db.beginTransaction((err) => {
+      if (err) console.log(err);
 
-      if (db && user.id === db.id && bcrypt.compareSync(user.pw, db.password)) {
+      db.query(insert, [token, user.id], (err) => {
+        if (err) console.log(err);
         res.cookie("user", token);
-        response.token = token;
-        response.isSuccess = true;
-        response.name = db.name;
-        response.id = db.id;
-        return res.json(response);
-      }
-      return res.json(response);
+        db.query(sql, [user.id], (err, rows) => {
+          const db = rows[0];
+
+          if (
+            db &&
+            user.id === db.id &&
+            bcrypt.compareSync(user.pw, db.password)
+          ) {
+            response.isSuccess = true;
+            response.name = db.name;
+            return res.json(response);
+          }
+          return res.json(response);
+        });
+      });
     });
   },
 };
