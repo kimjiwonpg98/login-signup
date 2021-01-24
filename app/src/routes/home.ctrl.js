@@ -1,9 +1,9 @@
 "use strict";
 
-const db = require("../config/dbConfig");
+const db = require("../models/dbConfig");
 const bcrypt = require("bcrypt-nodejs");
 const jwt = require("jsonwebtoken");
-const secretObject = require("../config/jwt");
+const secretObject = require("../models/jwt");
 
 const output = {
   home: (req, res) => res.render("./home.ejs"),
