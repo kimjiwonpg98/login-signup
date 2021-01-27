@@ -1,9 +1,6 @@
 "use strict";
 
-const db = require("../models/dbConfig");
-const bcrypt = require("bcrypt-nodejs");
-const jwt = require("jsonwebtoken");
-const secretObject = require("../models/jwt");
+const User = require("../models/User");
 
 const output = {
   home: (req, res) => res.render("./home.ejs"),
@@ -13,56 +10,17 @@ const output = {
 };
 
 const process = {
-  signup: (req, res) => {
-    const data = req.body;
-    bcrypt.genSalt(10, (err, salt) => {
-      if (err) {
-        console.log("bcrypt.genSalt() error :", err.message);
-      } else {
-        bcrypt.hash(data.password, salt, null, (err, hash) => {
-          let sql = "INSERT INTO user (id, password, name) VALUES (?, ?, ?)";
-          const params = [data.id, hash, data.userName];
-          db.query(sql, params, (err) => {
-            if (err) console.log(err);
-          });
-        });
-      }
-    });
+  signup: async (req, res) => {
+    const user = new User(req.body);
+    const response = await user.signup();
+    return res.json(response);
   },
   //토큰 데이터베이스에도 넣어주기
-  login: (req, res) => {
-    const response = {};
-    const user = req.body;
-    let token = jwt.sign(
-      {
-        id: user.id,
-      },
-      secretObject.secret
-    );
-    let sql = `SELECT * FROM user WHERE id LIKE ?`;
-    let insert = `UPDATE USER  SET token = ? WHERE id = ?`;
-    db.beginTransaction((err) => {
-      if (err) console.log(err);
-
-      db.query(insert, [token, user.id], (err) => {
-        if (err) console.log(err);
-        res.cookie("user", token);
-        db.query(sql, [user.id], (err, rows) => {
-          const db = rows[0];
-
-          if (
-            db &&
-            user.id === db.id &&
-            bcrypt.compareSync(user.pw, db.password)
-          ) {
-            response.isSuccess = true;
-            response.name = db.name;
-            return res.json(response);
-          }
-          return res.json(response);
-        });
-      });
-    });
+  login: async (req, res) => {
+    const user = new User(req.body);
+    const response = await user.login();
+    res.cookie("user", response.token);
+    return res.json(response);
   },
 };
 

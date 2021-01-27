@@ -28,9 +28,15 @@ function requestSignup() {
     headers: {
       "Content-Type": "application/json",
     },
-  });
-
-  location.href = "/";
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.success) {
+        alert("환영합니다!");
+        return (location.href = "/");
+      }
+      alert(res.msg);
+    });
 }
 
 function passwordCheck(password) {

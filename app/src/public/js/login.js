@@ -29,14 +29,14 @@ const login = () => {
       .then((res) => res.json())
       .then((res) => processResponse(res))
       .catch((err) => {
-        console.log(err);
+        console.err(new Error("로그인 중 에러 발생"));
       });
   };
 
   requestLogin(post);
 
   const processResponse = (res) => {
-    if (res.isSuccess) {
+    if (res.success) {
       let name = res.name;
       alert(`${name}님 환영합니다🎉`);
       return (location.href = "/success");
